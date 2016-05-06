@@ -1,5 +1,7 @@
 package com.movies_app.saurabhjn76.moviesapp;
 
+import android.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -23,17 +25,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
-        GridView gridview = (GridView) findViewById(R.id.gridView);
-        gridview.setAdapter(new ImageAdapter(MainActivity.this));
-
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(MainActivity.this, "the......" + position,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
+       FragmentManager manager= getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.content_layout,new MainFragment()).commit();
 
     }
 
@@ -60,3 +55,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+

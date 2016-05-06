@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.movies_app.saurabhjn76.moviesapp.MainActivity"
+    tools:context="com.movies_app.saurabhjn76.moviesapp.MainFragment"
     tools:showIn="@layout/activity_main">
 
 
@@ -22,4 +22,14 @@
         android:numColumns="2"
 
         android:clickable="true" />
+
+   <!-- <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/textView"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="199dp" />-->
 </RelativeLayout>
