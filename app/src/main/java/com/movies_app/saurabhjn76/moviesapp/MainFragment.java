@@ -1,7 +1,8 @@
 package com.movies_app.saurabhjn76.moviesapp;
 
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,13 +49,17 @@ public class MainFragment extends Fragment {
         // setting up adapters
         imageAdapter = new ImageAdapter(mainFragmentView.getContext());
         gridview = (GridView) mainFragmentView.findViewById(R.id.gridView);
-        updateUI();
+        update();
         gridview.setAdapter(imageAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Toast.makeText(getActivity(), "the......" + position,
                         Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), DetailActivity.class);
+                Bundle movi=new Bundle();
+                intent.putExtra(Intent.EXTRA_SUBJECT,(Parcelable)movies.get(position));
+                startActivity(intent);
             }
         });
         return mainFragmentView;
@@ -62,13 +67,13 @@ public class MainFragment extends Fragment {
     public void getMovies(){
         String url = "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc"  + "&"
                 + "&api_key=" + key;
-        Toast.makeText(getActivity(),"hello",Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getActivity(),"hello",Toast.LENGTH_SHORT).show();
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Toast.makeText(getActivity(),response.toString(),Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(getActivity(),response.toString(),Toast.LENGTH_SHORT).show();
                             JSONArray items = response.getJSONArray("results");
                             JSONObject movieObj;
                             for (int i=0; i<items.length(); i++){
@@ -99,18 +104,18 @@ public class MainFragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Showcase", "Error in JSON Parsing");
+                Log.d("Showcase", "Error");
             }
         });
 
         mRequestQ.add(req);
     }
 
-    public void updateUI() {
+    public void update() {
         movies.clear();
         imageAdapter.clearItems();
         getMovies();
-        Toast.makeText(getActivity(),"ddfdsfdsfds"+movies.size(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(getActivity(),"ddfdsfdsfds"+movies.size(),Toast.LENGTH_LONG).show();
     }
 }
 

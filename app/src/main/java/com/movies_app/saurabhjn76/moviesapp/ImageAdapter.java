@@ -43,7 +43,6 @@ public  class ImageAdapter extends BaseAdapter {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
                /* imageView.setLayoutParams(new GridView.LayoutParams(85, 85));*/
-            imageView.setPadding(0, 0, 0, 0);
             imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             imageView.setAdjustViewBounds(true);
         } else {
@@ -52,7 +51,6 @@ public  class ImageAdapter extends BaseAdapter {
         // images.get(position)
 
         Picasso.with(mContext).load(images.get(position)).placeholder(R.drawable.lee_chong_wei).into(imageView);
-        System.out.print(23);
         return imageView;
     }
 
