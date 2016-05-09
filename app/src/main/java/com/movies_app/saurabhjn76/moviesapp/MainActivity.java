@@ -45,14 +45,20 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        MainFragment fragment = MainFragment.instance;
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_popularity) {
-            return true;
+            fragment.sort_order = "popularity.desc";
+            fragment.update();
+
+
+
         }
         if(id==R.id.action_rated)
         {
-            return true;
+            fragment.sort_order = "vote_average.desc";
+            fragment.update();
         }
 
         return super.onOptionsItemSelected(item);

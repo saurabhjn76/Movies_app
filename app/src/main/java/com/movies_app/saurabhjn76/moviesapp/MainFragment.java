@@ -34,16 +34,18 @@ public class MainFragment extends Fragment {
     private RequestQueue mRequestQ;
     public ImageAdapter imageAdapter;
     GridView gridview;
+    public static MainFragment instance;
+    public String sort_order="popularity.desc";
     public String key = "7c8618ff3d5fd73e6601c1d5e1ef3f33";
 
     public MainFragment() {
-
+    instance=this;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mainFragmentView = inflater.inflate(R.layout.content_main, container, false);
-        Toast.makeText(getActivity(),"1234444",Toast.LENGTH_LONG).show();
+     //   Toast.makeText(getActivity(),"1234444",Toast.LENGTH_LONG).show();
         mRequestQ = Volley.newRequestQueue(mainFragmentView.getContext());
 
         // setting up adapters
@@ -54,8 +56,8 @@ public class MainFragment extends Fragment {
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(getActivity(), "the......" + position,
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "the......" + position,
+                  //      Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), DetailActivity.class);
                 Bundle movi=new Bundle();
                 intent.putExtra(Intent.EXTRA_SUBJECT,(Parcelable)movies.get(position));
@@ -64,10 +66,10 @@ public class MainFragment extends Fragment {
         });
         return mainFragmentView;
     }
-    public void getMovies(){
-        String url = "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc"  + "&"
+    public void getMovies( String sort_order){
+        String url = "http://api.themoviedb.org/3/discover/movie?sort_by="+sort_order + "&"
                 + "&api_key=" + key;
-       // Toast.makeText(getActivity(),"hello",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),sort_order,Toast.LENGTH_SHORT).show();
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -113,8 +115,9 @@ public class MainFragment extends Fragment {
 
     public void update() {
         movies.clear();
+        //Toast.makeText(getActivity(),movies.size(),Toast.LENGTH_SHORT).show();
         imageAdapter.clearItems();
-        getMovies();
+        getMovies(sort_order);
         //Toast.makeText(getActivity(),"ddfdsfdsfds"+movies.size(),Toast.LENGTH_LONG).show();
     }
 }
