@@ -36,7 +36,7 @@ public class MainFragment extends Fragment {
     GridView gridview;
     public static MainFragment instance;
     public String sort_order="popularity.desc";
-   
+    public String key = "7c8618ff3d5fd73e6601c1d5e1ef3f33";
 
     public MainFragment() {
     instance=this;
@@ -69,7 +69,7 @@ public class MainFragment extends Fragment {
     public void getMovies( String sort_order){
         String url = "http://api.themoviedb.org/3/discover/movie?sort_by="+sort_order + "&"
                 + "&api_key=" + key;
-        Toast.makeText(getActivity(),sort_order,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(),sort_order,Toast.LENGTH_SHORT).show();
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -106,7 +106,7 @@ public class MainFragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Showcase", "Error");
+                Log.d("Verbose", "Error");
             }
         });
 

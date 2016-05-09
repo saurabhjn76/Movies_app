@@ -22,7 +22,7 @@ public class Movies implements Parcelable{
     protected Movies(Parcel in) {
         name = in.readString();
         rating = in.readFloat();
-        popularity = in.readByte() == 0x00 ? null : in.readDouble();
+        popularity = in.readDouble();
         released_date = in.readString();
         synopsis = in.readString();
         poster_url = in.readString();
@@ -35,29 +35,25 @@ public class Movies implements Parcelable{
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeFloat(rating);
-
-            dest.writeByte((byte) (0x01));
-            dest.writeDouble(popularity);
-
-        dest.writeString(released_date);
-        dest.writeString(synopsis);
-        dest.writeString(poster_url);
-        dest.writeInt(id);
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeString(name);
+        parcel.writeFloat(rating);
+        parcel.writeDouble(popularity);
+        parcel.writeString(released_date);
+        parcel.writeString(synopsis);
+        parcel.writeString(poster_url);
+        parcel.writeInt(id);
     }
 
-    @SuppressWarnings("unused")
     public static final Parcelable.Creator<Movies> CREATOR = new Parcelable.Creator<Movies>() {
         @Override
-        public Movies createFromParcel(Parcel in) {
-            return new Movies(in);
+        public Movies createFromParcel(Parcel parcel) {
+            return new Movies(parcel);
         }
 
         @Override
-        public Movies[] newArray(int size) {
-            return new Movies[size];
+        public Movies[] newArray(int i) {
+            return new Movies[i];
         }
     };
 }

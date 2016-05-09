@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -15,11 +14,11 @@ import java.util.ArrayList;
  * Created by saurabh on 6/5/16.
  */
 public  class ImageAdapter extends BaseAdapter {
-    private Context mContext;
+    private Context Context_;
     public ArrayList<String> images = new ArrayList<String>();
 
     public ImageAdapter(Context c) {
-        mContext = c;
+        Context_ = c;
     }
 
     @Override
@@ -41,7 +40,7 @@ public  class ImageAdapter extends BaseAdapter {
         ImageView imageView;
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
-            imageView = new ImageView(mContext);
+            imageView = new ImageView(Context_);
                /* imageView.setLayoutParams(new GridView.LayoutParams(85, 85));*/
             imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             imageView.setAdjustViewBounds(true);
@@ -50,7 +49,7 @@ public  class ImageAdapter extends BaseAdapter {
         }
         // images.get(position)
 
-        Picasso.with(mContext).load(images.get(position)).placeholder(R.drawable.lee_chong_wei).into(imageView);
+        Picasso.with(Context_).load(images.get(position)).placeholder(R.drawable.lee_chong_wei).into(imageView);
         return imageView;
     }
 
@@ -71,7 +70,7 @@ public  class ImageAdapter extends BaseAdapter {
     };*/
     public void addItem(String url){
         images.add(url);
-        /*notifyDataSetChanged();*/
+        notifyDataSetChanged();
 
     }
 
