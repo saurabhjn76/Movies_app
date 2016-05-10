@@ -1,20 +1,11 @@
 package com.movies_app.saurabhjn76.moviesapp;
 
-import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -25,7 +16,7 @@ import java.text.SimpleDateFormat;
  * Created by saurabh on 6/5/16.
  */
 public class DetailActivity extends AppCompatActivity {
-    public View mainView;
+
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);

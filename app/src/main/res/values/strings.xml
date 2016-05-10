@@ -2,4 +2,7 @@
     <string name="app_name">Moviesapp</string>
     <string name="action_popularity">Sort by:Popularity</string>
     <string name="action_rated">Sort by:Most Rated</string>
+    <string name="synopsis">lorem ipsum.......</string>
+    <string name="date">25-06-12</string>
+    <string name="small_text">small text</string>
 </resources>

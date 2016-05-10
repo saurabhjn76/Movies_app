@@ -15,7 +15,6 @@
         android:id="@+id/gridView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:verticalSpacing="0dp"
         android:horizontalSpacing="0dp"
         android:listSelector="@null"
