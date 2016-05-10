@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_popularity) {
-            fragment.sort_order = "popularity.desc";
+            fragment.sort_order = "popular";
             fragment.update();
 
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if(id==R.id.action_rated)
         {
-            fragment.sort_order = "vote_average.desc";
+            fragment.sort_order = "top_rated";
             fragment.update();
         }
 

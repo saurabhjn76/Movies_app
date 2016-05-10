@@ -35,7 +35,7 @@ public class MainFragment extends Fragment {
     public ImageAdapter imageAdapter;
     GridView gridview;
     public static MainFragment instance;
-    public String sort_order="popularity.desc";
+    public String sort_order="popular";
     public String key = "7c8618ff3d5fd73e6601c1d5e1ef3f33";
 
     public MainFragment() {
@@ -67,8 +67,7 @@ public class MainFragment extends Fragment {
         return mainFragmentView;
     }
     public void getMovies( String sort_order){
-        String url = "http://api.themoviedb.org/3/discover/movie?sort_by="+sort_order + "&"
-                + "&api_key=" + key;
+        String url = "http://api.themoviedb.org/3/movie/"+sort_order +"?api_key=" + key;
         //Toast.makeText(getActivity(),sort_order,Toast.LENGTH_SHORT).show();
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
