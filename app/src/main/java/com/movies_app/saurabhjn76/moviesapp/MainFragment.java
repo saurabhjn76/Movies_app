@@ -67,6 +67,7 @@ public class MainFragment extends Fragment {
         return mainFragmentView;
     }
     public void getMovies( String sort_order){
+
         String url = "http://api.themoviedb.org/3/movie/"+sort_order +"?api_key=" + key;
         //Toast.makeText(getActivity(),sort_order,Toast.LENGTH_SHORT).show();
         JsonObjectRequest req = new JsonObjectRequest(url, null,
@@ -106,6 +107,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("Verbose", "Error");
+                Toast.makeText(getActivity(),"Error:Check your internet connection",Toast.LENGTH_LONG);
             }
         });
 
@@ -117,6 +119,7 @@ public class MainFragment extends Fragment {
         //Toast.makeText(getActivity(),movies.size(),Toast.LENGTH_SHORT).show();
         imageAdapter.clearItems();
         getMovies(sort_order);
+
         //Toast.makeText(getActivity(),"ddfdsfdsfds"+movies.size(),Toast.LENGTH_LONG).show();
     }
 }

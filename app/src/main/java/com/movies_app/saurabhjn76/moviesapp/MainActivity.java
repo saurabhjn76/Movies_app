@@ -1,6 +1,9 @@
 package com.movies_app.saurabhjn76.moviesapp;
 
 import android.app.Fragment;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -19,16 +22,106 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+    public  View v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        v= findViewById(R.id.content_layout);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (!checknetconnection()) {
+            Snackbar.make(v, "No internet Connection", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("CLOSE", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    })
+                    .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
+                    .show();
+
+        }
+
+            ;
 
         setSupportActionBar(toolbar);
-       FragmentManager manager= getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.content_layout,new MainFragment()).commit();
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.content_layout, new MainFragment()).commit();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!checknetconnection()) {
+            Snackbar.make(v, "No internet Connection", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("CLOSE", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    })
+                    .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
+                    .show();
+
+        }
+
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (!checknetconnection()) {
+            Snackbar.make(v, "No internet Connection", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("CLOSE", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    })
+                    .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
+                    .show();
+
+        }
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        if (!checknetconnection()) {
+            Snackbar.make(v, "No internet Connection", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("CLOSE", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    })
+                    .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
+                    .show();
+
+        }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        if (!checknetconnection()) {
+            Snackbar.make(v, "No internet Connection", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("CLOSE", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    })
+                    .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
+                    .show();
+
+        }
 
     }
 
@@ -62,6 +155,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public boolean checknetconnection()
+    {
+        ConnectivityManager manager_c =(ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo activenetwork=manager_c.getActiveNetworkInfo();
+        boolean isConnected= activenetwork!= null && activenetwork.isConnectedOrConnecting();
+        return isConnected;
     }
 
 }
