@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -34,12 +35,14 @@ public class DetailActivity extends AppCompatActivity {
     public String key = "7c8618ff3d5fd73e6601c1d5e1ef3f33";
     public TrailerAdapter trailerAdapter;
     public LinearLayout trailersList;
+    public LinearLayout reviewList;
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.detailactivity);
         trailersList = (LinearLayout) findViewById(R.id.trailerList);
+        reviewList=(LinearLayout) findViewById(R.id.reviewsList);
         trailerAdapter = new TrailerAdapter(getApplicationContext());
         ReqQueue= Volley.newRequestQueue(getApplicationContext());;
         Movies movies = getIntent().getParcelableExtra(Intent.EXTRA_SUBJECT);
@@ -104,6 +107,36 @@ public class DetailActivity extends AppCompatActivity {
 
         ReqQueue.add(req);
     }
+    public void getReviews(int id){
+        String url = "http://api.themoviedb.org/3/movie/" + id + "/reviews?api_key=" + key;
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray items = response.getJSONArray("results");
+                            JSONObject reviewObj;
+                            View view;
+                            for (int i = 0; i < items.length(); i++) {
+                                reviewObj = items.getJSONObject(i);
+                                Review review = new Review(reviewObj.getString("author"),reviewObj.getString("content"),reviewObj.getString("url"));
+                                reviewList.addView(view = createReviewView(review, i));
+                            }
+                        }
+                        catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error", "Error in JSON Parsing");
+            }
+        });
+
+        ReqQueue.add(req);
+    }
+
 
 
 
