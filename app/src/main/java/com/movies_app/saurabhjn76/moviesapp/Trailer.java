@@ -8,8 +8,10 @@ public class Trailer {
     private String label;
     private String id;
 
+     Trailer(){
 
-    void Trailer (String url,String label,String id)
+    }
+     Trailer (String url,String label,String id)
     {
         this.url=url;
         this.id=id;

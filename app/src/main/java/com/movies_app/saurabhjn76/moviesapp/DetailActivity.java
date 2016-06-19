@@ -1,13 +1,26 @@
 package com.movies_app.saurabhjn76.moviesapp;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,11 +30,18 @@ import java.text.SimpleDateFormat;
  */
 public class DetailActivity extends AppCompatActivity {
 
+    RequestQueue ReqQueue;
+    public String key = "7c8618ff3d5fd73e6601c1d5e1ef3f33";
+    public TrailerAdapter trailerAdapter;
+    public LinearLayout trailersList;
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.detailactivity);
+        trailersList = (LinearLayout) findViewById(R.id.trailerList);
+        trailerAdapter = new TrailerAdapter(getApplicationContext());
+        ReqQueue= Volley.newRequestQueue(getApplicationContext());;
         Movies movies = getIntent().getParcelableExtra(Intent.EXTRA_SUBJECT);
         ((TextView) findViewById(R.id.textView_movietitle)).setText(movies.name);
         Picasso.with(this).load(movies.poster_url).
@@ -40,9 +60,51 @@ public class DetailActivity extends AppCompatActivity {
             releasedDate = movies.released_date;
         }
         ((TextView) findViewById(R.id.textView_release_date)).setText(releasedDate);
-
+        getTrailers(movies.id);
 
     }
+    public void getTrailers(int id){
+        String url = "http://api.themoviedb.org/3/movie/" + id + "/videos?api_key=" + key;
+        System.out.println("link" +url);
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray items = response.getJSONArray("results");
+                            JSONObject trailerObj;
+                            for (int i=0; i<items.length(); i++){
+                                trailerObj = items.getJSONObject(i);
+                                Trailer trailer = new Trailer(trailerObj.getString("id"),trailerObj.getString("key"),trailerObj.getString("name"));
+                                trailerAdapter.addTrailer(trailer);
+                            }
+                        } catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                        for (int i = 0; i < trailerAdapter.getCount(); i++){
+                            trailersList.addView(trailerAdapter.getView(i, null, null));
+                        }
+                        // update share intent
+                       /* if (trailerAdapter.trailers.size() > 0) {
+                            try {
+                                mShareActionProvider.setShareIntent(createVideoShareIntent(YOUTUBE_URL_BASE +
+                                        trailerAdapter.trailers.get(0).getUrl()));
+                            } catch (NullPointerException e) { // cached trailers. var not defined yet
+                                Log.v("error", "Share Action Provider not defined");
+                            }
+                        }*/
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error", "Error in JSON Parsing");
+            }
+        });
+
+        ReqQueue.add(req);
+    }
+
 
 
 }
