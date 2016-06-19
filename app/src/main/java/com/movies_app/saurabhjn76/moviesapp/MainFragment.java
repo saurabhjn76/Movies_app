@@ -36,7 +36,7 @@ public class MainFragment extends Fragment {
     GridView gridview;
     public static MainFragment instance;
     public String sort_order="popular";
-    public String key = "Insert your key here..............";
+    public String key = "7c8618ff3d5fd73e6601c1d5e1ef3f33";
 
     public MainFragment() {
     instance=this;
