@@ -34,6 +34,7 @@ public class DetailActivity extends AppCompatActivity {
     RequestQueue ReqQueue;
     public String key = "7c8618ff3d5fd73e6601c1d5e1ef3f33";
     public TrailerAdapter trailerAdapter;
+    public ReviewsAdapter reviewsAdapter;
     public LinearLayout trailersList;
     public LinearLayout reviewList;
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class DetailActivity extends AppCompatActivity {
         trailersList = (LinearLayout) findViewById(R.id.trailerList);
         reviewList=(LinearLayout) findViewById(R.id.reviewsList);
         trailerAdapter = new TrailerAdapter(getApplicationContext());
+        reviewsAdapter = new ReviewsAdapter(getApplicationContext());
         ReqQueue= Volley.newRequestQueue(getApplicationContext());;
         Movies movies = getIntent().getParcelableExtra(Intent.EXTRA_SUBJECT);
         ((TextView) findViewById(R.id.textView_movietitle)).setText(movies.name);
@@ -64,11 +66,11 @@ public class DetailActivity extends AppCompatActivity {
         }
         ((TextView) findViewById(R.id.textView_release_date)).setText(releasedDate);
         getTrailers(movies.id);
+        getReviews(movies.id);
 
     }
     public void getTrailers(int id){
         String url = "http://api.themoviedb.org/3/movie/" + id + "/videos?api_key=" + key;
-        System.out.println("link" +url);
 
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
@@ -109,6 +111,8 @@ public class DetailActivity extends AppCompatActivity {
     }
     public void getReviews(int id){
         String url = "http://api.themoviedb.org/3/movie/" + id + "/reviews?api_key=" + key;
+        System.out.println("link" +url);
+
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -120,12 +124,20 @@ public class DetailActivity extends AppCompatActivity {
                             for (int i = 0; i < items.length(); i++) {
                                 reviewObj = items.getJSONObject(i);
                                 Review review = new Review(reviewObj.getString("author"),reviewObj.getString("content"),reviewObj.getString("url"));
-                                reviewList.addView(view = createReviewView(review, i));
+                                reviewsAdapter.addReview(review);
+
                             }
                         }
                         catch (JSONException e){
                             e.printStackTrace();
                         }
+                        if(reviewsAdapter.getCount()==0){
+                            reviewList.addView(reviewsAdapter.getView(-1,null,null));
+                        }
+                        for (int i = 0; i < reviewsAdapter.getCount(); i++){
+                            reviewList.addView(reviewsAdapter.getView(i, null, null));
+                        }
+
                     }
                 }, new Response.ErrorListener() {
             @Override

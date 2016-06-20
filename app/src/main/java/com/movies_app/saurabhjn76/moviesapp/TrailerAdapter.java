@@ -37,11 +37,11 @@ public class TrailerAdapter extends BaseAdapter {
         }
         trailerRow.setId(10+i);
         ((TextView) trailerRow.findViewById(R.id.trailer_label)).setText(trailers.get(i).getLabel());
-        System.out.println(trailers.get(i).toString());
+
         Picasso.with(mContext).load("http://img.youtube.com/vi/" + trailers.get(i).getUrl() + "/mqdefault.jpg")
                 .placeholder(R.mipmap.ic_launcher)
                 .into((ImageView) trailerRow.findViewById(R.id.image_trailer));
-        System.out.println("http://img.youtube.com/vi/" + trailers.get(i).getUrl() + "/default.jpg");
+      //  System.out.println("http://img.youtube.com/vi/" + trailers.get(i).getUrl() + "/default.jpg");
         // youtube thumbnail - http://stackoverflow.com/questions/2068344/how
 
         final String url = trailers.get(i).getUrl();

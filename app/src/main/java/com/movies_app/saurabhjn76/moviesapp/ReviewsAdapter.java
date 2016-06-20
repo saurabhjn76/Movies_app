@@ -29,38 +29,36 @@ public class ReviewsAdapter extends BaseAdapter {
     }
     @Override
     public View getView(final int i, final View convertView, ViewGroup viewGroup) {
-        View trailerRow;
+        View reviewRow;
         if (convertView == null) {
-            trailerRow = View.inflate(mContext, R.layout.trailer_list, null);
+            reviewRow = View.inflate(mContext, R.layout.review_layout, null);
         } else {
-            trailerRow = convertView;
+            reviewRow = convertView;
         }
-        trailerRow.setId(10+i);
-        ((TextView) trailerRow.findViewById(R.id.trailer_label)).setText(trailers.get(i).getLabel());
-        System.out.println(trailers.get(i).toString());
-        Picasso.with(mContext).load("http://img.youtube.com/vi/" + trailers.get(i).getUrl() + "/mqdefault.jpg")
-                .placeholder(R.mipmap.ic_launcher)
-                .into((ImageView) trailerRow.findViewById(R.id.image_trailer));
-        System.out.println("http://img.youtube.com/vi/" + trailers.get(i).getUrl() + "/default.jpg");
+
+        reviewRow.setId(1000+i);
+        if(i!=-1) {
+            ((TextView) reviewRow.findViewById(R.id.reviewAuthor)).setText(reviews.get(i).getAuthor());
+            ((TextView) reviewRow.findViewById(R.id.reviewText)).setText(reviews.get(i).getContent());
+            System.out.println(reviews.get(i).getAuthor());
+        }
+        else{
+            ((TextView) reviewRow.findViewById(R.id.reviewText)).setText("No Reviews Available");
+            ((TextView) reviewRow.findViewById(R.id.reviewText)).setVisibility(0);
+
+        }
         // youtube thumbnail - http://stackoverflow.com/questions/2068344/how
 
-        final String url = trailers.get(i).getUrl();
-        trailerRow.findViewById(R.id.image_trailer).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "You Clicked "+i, Toast.LENGTH_LONG).show();
-            }
-        });
-        return trailerRow;
+        return reviewRow;
     }
     @Override
     public int getCount() {
-        return trailers.size();
+        return reviews.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return trailers.get(i);
+        return reviews.get(i);
     }
 
     @Override
@@ -69,8 +67,8 @@ public class ReviewsAdapter extends BaseAdapter {
     }
 
 
-    public void addTrailer(Trailer trailer){
-        trailers.add(trailer);
+    public void addReview(Review review){
+        reviews.add(review);
         notifyDataSetChanged();
     }
 
