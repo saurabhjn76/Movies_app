@@ -37,7 +37,7 @@ public class MainFragment extends Fragment {
     GridView gridview;
     public static MainFragment instance;
     public String sort_order="popular";
-   /* public String key = "7c8618ff3d5f3d73e6601c1d5e1ef3f3";*/ // not the right key 
+   /* public String key = "7c8618ff3d5f3d73e6601c1d5e1ef3f3";*/ // invalid key actual key has been removed
     public String  key ="onsert key here";
 
     public MainFragment() {
