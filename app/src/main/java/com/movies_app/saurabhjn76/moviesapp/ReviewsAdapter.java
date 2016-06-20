@@ -1,17 +1,10 @@
 package com.movies_app.saurabhjn76.moviesapp;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -20,18 +13,18 @@ import java.util.ArrayList;
  */
 public class ReviewsAdapter extends BaseAdapter {
 
-    private Context mContext;
+    private Context myContext;
     public ArrayList<Review> reviews = new ArrayList<Review>();
 
 
     public ReviewsAdapter(Context context){
-        mContext = context;
+        myContext = context;
     }
     @Override
     public View getView(final int i, final View convertView, ViewGroup viewGroup) {
         View reviewRow;
         if (convertView == null) {
-            reviewRow = View.inflate(mContext, R.layout.review_layout, null);
+            reviewRow = View.inflate(myContext, R.layout.review_layout, null);
         } else {
             reviewRow = convertView;
         }
@@ -47,8 +40,6 @@ public class ReviewsAdapter extends BaseAdapter {
             ((TextView) reviewRow.findViewById(R.id.reviewText)).setVisibility(0);
 
         }
-        // youtube thumbnail - http://stackoverflow.com/questions/2068344/how
-
         return reviewRow;
     }
     @Override

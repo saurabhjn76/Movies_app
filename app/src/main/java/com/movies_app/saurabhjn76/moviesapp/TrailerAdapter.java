@@ -41,14 +41,12 @@ public class TrailerAdapter extends BaseAdapter {
         Picasso.with(mContext).load("http://img.youtube.com/vi/" + trailers.get(i).getUrl() + "/mqdefault.jpg")
                 .placeholder(R.mipmap.ic_launcher)
                 .into((ImageView) trailerRow.findViewById(R.id.image_trailer));
-      //  System.out.println("http://img.youtube.com/vi/" + trailers.get(i).getUrl() + "/default.jpg");
-        // youtube thumbnail - http://stackoverflow.com/questions/2068344/how
 
         final String url = trailers.get(i).getUrl();
         trailerRow.findViewById(R.id.image_trailer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "You Clicked "+i, Toast.LENGTH_LONG).show();
+              //  Toast.makeText(mContext, "You Clicked "+i, Toast.LENGTH_LONG).show();
                 watchYoutubeVideo(url);
             }
         });

@@ -32,7 +32,7 @@ import java.text.SimpleDateFormat;
 public class DetailActivity extends AppCompatActivity {
 
     RequestQueue ReqQueue;
-    public String key = "7c8618ff3d5fd73e6601c1d5e1ef3f33";
+    public String key = "insert the key here";
     public TrailerAdapter trailerAdapter;
     public ReviewsAdapter reviewsAdapter;
     public LinearLayout trailersList;
@@ -42,12 +42,15 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.detailactivity);
+
         trailersList = (LinearLayout) findViewById(R.id.trailerList);
         reviewList=(LinearLayout) findViewById(R.id.reviewsList);
         trailerAdapter = new TrailerAdapter(getApplicationContext());
         reviewsAdapter = new ReviewsAdapter(getApplicationContext());
         ReqQueue= Volley.newRequestQueue(getApplicationContext());;
         Movies movies = getIntent().getParcelableExtra(Intent.EXTRA_SUBJECT);
+        getTrailers(movies.id);
+        getReviews(movies.id);
         ((TextView) findViewById(R.id.textView_movietitle)).setText(movies.name);
         Picasso.with(this).load(movies.poster_url).
                 placeholder(R.mipmap.ic_launcher).into((ImageView)findViewById(R.id.imageView));
@@ -65,8 +68,7 @@ public class DetailActivity extends AppCompatActivity {
             releasedDate = movies.released_date;
         }
         ((TextView) findViewById(R.id.textView_release_date)).setText(releasedDate);
-        getTrailers(movies.id);
-        getReviews(movies.id);
+
 
     }
     public void getTrailers(int id){
@@ -90,20 +92,11 @@ public class DetailActivity extends AppCompatActivity {
                         for (int i = 0; i < trailerAdapter.getCount(); i++){
                             trailersList.addView(trailerAdapter.getView(i, null, null));
                         }
-                        // update share intent
-                       /* if (trailerAdapter.trailers.size() > 0) {
-                            try {
-                                mShareActionProvider.setShareIntent(createVideoShareIntent(YOUTUBE_URL_BASE +
-                                        trailerAdapter.trailers.get(0).getUrl()));
-                            } catch (NullPointerException e) { // cached trailers. var not defined yet
-                                Log.v("error", "Share Action Provider not defined");
-                            }
-                        }*/
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("error", "Error in JSON Parsing");
+                // error in json parsing
             }
         });
 
@@ -111,7 +104,7 @@ public class DetailActivity extends AppCompatActivity {
     }
     public void getReviews(int id){
         String url = "http://api.themoviedb.org/3/movie/" + id + "/reviews?api_key=" + key;
-        System.out.println("link" +url);
+        //System.out.println("link" +url);
 
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
@@ -142,7 +135,7 @@ public class DetailActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("error", "Error in JSON Parsing");
+              // error in json parsing
             }
         });
 
