@@ -1,11 +1,14 @@
 package com.movies_app.saurabhjn76.moviesapp;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
  * Created by saurabh on 26/7/16.
  */
 public class MovieContract {
+    public static final String AUTHORITY = "com.movies_app.saurabhjn76.moviesapp";
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
     public MovieContract(){
     }
 

@@ -23,6 +23,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".DetailActivity"></activity>
+        <provider
+            android:name="MoviesProvider"
+            android:authorities="com.movies_app.saurabhjn76.moviesapp">
+        </provider>
     </application>
 
 </manifest>
