@@ -32,7 +32,7 @@ import java.text.SimpleDateFormat;
 public class DetailActivity extends AppCompatActivity {
 
     RequestQueue ReqQueue;
-    public String key = "insert the key here";
+    public String key = "7c8618ff3d5fd73e6601c1d5e1ef3f33";
     public TrailerAdapter trailerAdapter;
     public ReviewsAdapter reviewsAdapter;
     public LinearLayout trailersList;

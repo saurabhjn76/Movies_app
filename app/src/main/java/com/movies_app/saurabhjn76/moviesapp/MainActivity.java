@@ -1,6 +1,7 @@
 package com.movies_app.saurabhjn76.moviesapp;
 
 import android.app.Fragment;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.PersistableBundle;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-            ;
+
 
         setSupportActionBar(toolbar);
         FragmentManager manager = getSupportFragmentManager();
