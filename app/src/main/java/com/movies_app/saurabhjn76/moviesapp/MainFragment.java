@@ -70,56 +70,64 @@ public class MainFragment extends Fragment {
         return mainFragmentView;
     }
     public void getMovies( String sort_order){
-
-        String url = "http://api.themoviedb.org/3/movie/"+sort_order +"?api_key=" + key;
-        //Toast.makeText(getActivity(),sort_order,Toast.LENGTH_SHORT).show();
-
-        JsonObjectRequest req = new JsonObjectRequest(url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                          //  Toast.makeText(getActivity(),response.toString(),Toast.LENGTH_SHORT).show();
-                            JSONArray items = response.getJSONArray("results");
-                            JSONObject movieObj;
-                            for (int i=0; i<items.length(); i++){
-                                movieObj = items.getJSONObject(i);
-                                Movies movie = new Movies();
-                                movie.id = movieObj.getInt("id");
-                                movie.name = movieObj.getString("original_title");
-                                movie.rating = (float) movieObj.getDouble("vote_average");
-                                movie.popularity = movieObj.getDouble("popularity");
-                                movie.synopsis = movieObj.getString("overview");
-                                movie.poster_url = "http://image.tmdb.org/t/p/w185/" + movieObj.getString("poster_path");
-                                movie.released_date = movieObj.getString("release_date");
-
-                                movies.add(movie);
-                                // Add image to adapter
-                                imageAdapter.addItem(movie.poster_url);
-                            }
-                        } catch (JSONException e){
-                            e.printStackTrace();
-                        }
-                        if (isAdded()) {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    gridview.setAdapter(imageAdapter);
-                                }
-                            });
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Verbose", "Error");
-                Toast.makeText(getActivity(),"Error:Check your internet connection",Toast.LENGTH_LONG);
+            if(sort_order.equals("favourites"))
+            {
+                    getFavourites();
             }
-        });
+        else {
+                String url = "http://api.themoviedb.org/3/movie/" + sort_order + "?api_key=" + key;
+                //Toast.makeText(getActivity(),sort_order,Toast.LENGTH_SHORT).show();
 
-        mRequestQ.add(req);
+                JsonObjectRequest req = new JsonObjectRequest(url, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    //  Toast.makeText(getActivity(),response.toString(),Toast.LENGTH_SHORT).show();
+                                    JSONArray items = response.getJSONArray("results");
+                                    JSONObject movieObj;
+                                    for (int i = 0; i < items.length(); i++) {
+                                        movieObj = items.getJSONObject(i);
+                                        Movies movie = new Movies();
+                                        movie.id = movieObj.getInt("id");
+                                        movie.name = movieObj.getString("original_title");
+                                        movie.rating = (float) movieObj.getDouble("vote_average");
+                                        movie.popularity = movieObj.getDouble("popularity");
+                                        movie.synopsis = movieObj.getString("overview");
+                                        movie.poster_url = "http://image.tmdb.org/t/p/w185/" + movieObj.getString("poster_path");
+                                        movie.released_date = movieObj.getString("release_date");
+
+                                        movies.add(movie);
+                                        // Add image to adapter
+                                        imageAdapter.addItem(movie.poster_url);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                if (isAdded()) {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            gridview.setAdapter(imageAdapter);
+                                        }
+                                    });
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Verbose", "Error");
+                        Toast.makeText(getActivity(), "Error:Check your internet connection", Toast.LENGTH_LONG);
+                    }
+                });
+
+                mRequestQ.add(req);
+            }
     }
+    public void getFavourites()
+    {
 
+    }
 
     public void update() {
         movies.clear();

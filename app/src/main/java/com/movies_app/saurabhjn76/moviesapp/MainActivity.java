@@ -154,6 +154,11 @@ public class MainActivity extends AppCompatActivity {
             fragment.sort_order = "top_rated";
             fragment.update();
         }
+        if(id==R.id.action_fav)
+        {
+            fragment.sort_order="favourites";
+            fragment.update();
+        }
 
         return super.onOptionsItemSelected(item);
     }
