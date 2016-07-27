@@ -1,9 +1,11 @@
 package com.movies_app.saurabhjn76.moviesapp;
 
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -48,10 +51,11 @@ public class DetailActivity extends AppCompatActivity {
         trailerAdapter = new TrailerAdapter(getApplicationContext());
         reviewsAdapter = new ReviewsAdapter(getApplicationContext());
         ReqQueue= Volley.newRequestQueue(getApplicationContext());;
-        Movies movies = getIntent().getParcelableExtra(Intent.EXTRA_SUBJECT);
+       final Movies movies = getIntent().getParcelableExtra(Intent.EXTRA_SUBJECT);
         getTrailers(movies.id);
         getReviews(movies.id);
-        ((TextView) findViewById(R.id.textView_movietitle)).setText(movies.name);
+      TextView headder=  ((TextView) findViewById(R.id.textView_movietitle));
+        headder.setText(movies.name);
         Picasso.with(this).load(movies.poster_url).
                 placeholder(R.mipmap.ic_launcher).into((ImageView)findViewById(R.id.imageView));
         ((TextView) findViewById(R.id.textView_plotSynopsis)).setText(movies.synopsis);
@@ -68,6 +72,29 @@ public class DetailActivity extends AppCompatActivity {
             releasedDate = movies.released_date;
         }
         ((TextView) findViewById(R.id.textView_release_date)).setText(releasedDate);
+        headder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContentResolver contentResolver = getApplicationContext().getContentResolver();
+                MoviesDB mdb = new MoviesDB();
+                String message;
+                if (mdb.isMovieFavorited(contentResolver, movies.id)){
+                    message = "Removed from Favorites";
+                    mdb.removeMovie(contentResolver, movies.id);
+                    Toast.makeText(getApplicationContext(),"Removed from favourites",Toast.LENGTH_LONG);
+                  //  fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), android.R.drawable.btn_star_big_off));
+                } else {
+                    mdb.addMovie(contentResolver, movies);
+                    message = "Added to favorites";
+                    Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG);
+
+                }
+                //(MainFragment.instance).updateFavoritesGrid(); // till I start using a Loader, this one should suffice
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
 
 
     }

@@ -126,7 +126,11 @@ public class MainFragment extends Fragment {
     }
     public void getFavourites()
     {
-
+        movies.addAll((new MoviesDB()).getFavoriteMovies(getContext().getContentResolver()));
+        for (Movies movie : movies){
+            imageAdapter.addItem(movie.poster_url);
+        }
+        gridview.setAdapter(imageAdapter);
     }
 
     public void update() {
