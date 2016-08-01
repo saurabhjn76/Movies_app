@@ -68,7 +68,7 @@ public class MoviesProvider extends ContentProvider {
         return type;
     }
 
-    @Nullable
+    @   Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         Cursor cursor;

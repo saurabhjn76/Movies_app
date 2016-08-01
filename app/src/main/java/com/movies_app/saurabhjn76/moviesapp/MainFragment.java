@@ -1,9 +1,12 @@
 package com.movies_app.saurabhjn76.moviesapp;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +37,8 @@ public class MainFragment extends Fragment {
     public ArrayList<Movies> movies = new ArrayList<Movies>();
     private RequestQueue mRequestQ;
     public ImageAdapter imageAdapter;
+
+
     GridView gridview;
     public static MainFragment instance;
     public String sort_order="popular";

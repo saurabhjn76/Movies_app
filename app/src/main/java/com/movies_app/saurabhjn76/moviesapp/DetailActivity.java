@@ -89,8 +89,8 @@ public class DetailActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG);
 
                 }
-                //(MainFragment.instance).updateFavoritesGrid(); // till I start using a Loader, this one should suffice
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                MainFragment.instance.update();
+                //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
             }
 
         });

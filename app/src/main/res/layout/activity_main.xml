@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.movies_app.saurabhjn76.moviesapp.MainActivity">
+    tools:context="com.movies_app.saurabhjn76.moviesapp.MainActivity"
+     >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
