@@ -45,6 +45,15 @@ public class DetailFragment extends Fragment {
         instance=this;
     }
 
+    public static DetailFragment newInstance(Movies newMovie) {
+        Bundle args = new Bundle();
+        DetailFragment fragment = new DetailFragment();
+        args.putParcelable("movies", newMovie);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

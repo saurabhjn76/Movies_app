@@ -25,12 +25,15 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     public  View v;
     public View s;
+    boolean mTwoPane=true;
+    GridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         v= findViewById(R.id.content_layout);
+        gridView= (GridView)findViewById(R.id.gridView);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (!checknetconnection()) {
@@ -50,7 +53,32 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.content_layout, new MainFragment()).commit();
+
+        if (findViewById(R.id.content_layout) == null) {
+            // The detail container view will be present only in the large-screen layouts
+            // (res/layout-sw600dp). If this view is present, then the activity should be
+            // in two-pane mode.
+            mTwoPane = true;
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    DetailFragment detailActivityFragment = DetailFragment.newInstance(movies.get(position));
+                    getSupportFragmentManager().beginTransaction().replace(R.id.detailContainer, detailActivityFragment).commit();
+
+                }
+            });
+
+
+
+        } else {
+            mTwoPane = false;
+            manager.beginTransaction().replace(R.id.content_layout, new MainFragment()).commit();
+        }
+        //
 
     }
 
