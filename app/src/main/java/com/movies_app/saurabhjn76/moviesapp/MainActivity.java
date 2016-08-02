@@ -1,9 +1,11 @@
 package com.movies_app.saurabhjn76.moviesapp;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
@@ -21,6 +23,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public  View v;
@@ -59,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             // (res/layout-sw600dp). If this view is present, then the activity should be
             // in two-pane mode.
             mTwoPane = true;
+            MainFragment.instance.update();
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
@@ -66,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    DetailFragment detailActivityFragment = DetailFragment.newInstance(movies.get(position));
+                    DetailFragment detailActivityFragment = DetailFragment.newInstance(MainFragment.instance.movies.get(position));
+                  //  putExtra(Intent.EXTRA_SUBJECT,(Parcelable)movies.get(position));
                     getSupportFragmentManager().beginTransaction().replace(R.id.detailContainer, detailActivityFragment).commit();
 
                 }
@@ -90,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     .setAction("CLOSE", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+
 
                         }
                     })

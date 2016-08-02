@@ -40,6 +40,7 @@ public class DetailFragment extends Fragment {
     public LinearLayout trailersList;
     public LinearLayout reviewList;
     public View detailFragmentView;
+     Movies movies;
 
     public DetailFragment() {
         instance=this;
@@ -69,8 +70,11 @@ public class DetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         trailerAdapter = new TrailerAdapter(getActivity().getApplicationContext());
         reviewsAdapter = new ReviewsAdapter(getActivity().getApplicationContext());
-        ReqQueue= Volley.newRequestQueue(getActivity().getApplicationContext());;
-        final Movies movies = getActivity().getIntent().getParcelableExtra(Intent.EXTRA_SUBJECT);
+        ReqQueue= Volley.newRequestQueue(getActivity().getApplicationContext());
+            if (getArguments() != null)
+                movies = getArguments().getParcelable("movies");
+            if(getActivity().getIntent().getParcelableExtra(Intent.EXTRA_SUBJECT)!=null)
+             movies = getActivity().getIntent().getParcelableExtra(Intent.EXTRA_SUBJECT);
         getTrailers(movies.id);
         getReviews(movies.id);
         TextView headder=  ((TextView) detailFragmentView.findViewById(R.id.textView_movietitle));
