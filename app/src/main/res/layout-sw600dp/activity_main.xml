@@ -48,7 +48,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/detailContainer"
-            android:name="com.movies_app.saurabhjn76.moviesapp.MainFragment"
+            android:name="com.movies_app.saurabhjn76.moviesapp.DetailFragment"
 
             />
 

@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     public  View v;
+    public View s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
