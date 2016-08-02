@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     boolean mTwoPane=true;
     GridView gridView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
