@@ -39,7 +39,7 @@ public class MoviesDB {
     }
 
     public ArrayList<Movies> getFavoriteMovies(ContentResolver contentResolver){
-        Uri uri = Uri.parse(AUTHORITY_Uri + "/movies");
+            Uri uri = Uri.parse(AUTHORITY_Uri + "/movies");
         Cursor cursor = contentResolver.query(uri, null, null, null, null, null);
         ArrayList <Movies> movies = new ArrayList<>();
 

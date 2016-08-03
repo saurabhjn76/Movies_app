@@ -35,8 +35,8 @@ import java.text.SimpleDateFormat;
 public class DetailFragment extends Fragment {
     public static DetailFragment instance;
     RequestQueue ReqQueue;
-    //public String key = "c8618ff3d5fd73e6601c1d5e1ef3f337";// Wrong Key
-    public String key ="Insert Your Key Here";
+    public String key = "7c8618ff3d5fd73e6601c1d5e1ef3f33";// Wrong Key
+//    public String key ="Insert Your Key Here";
 
     public TrailerAdapter trailerAdapter;
     public ReviewsAdapter reviewsAdapter;

@@ -36,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null)
+        {
+         //  MainFragment.instance.movies.clear();
+           // MainFragment.instance.movies =(ArrayList<Movies>)savedInstanceState.get("Movie_Saved");
+        }
         setContentView(R.layout.activity_main);
         v= findViewById(R.id.content_layout);
         gridView= (GridView)findViewById(R.id.gridView);
@@ -148,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
+       // outState.putParcelableArrayList("Movie_Saved", MainFragment.instance.movies);
         if (!checknetconnection()) {
             Snackbar.make(v, "No internet Connection", Snackbar.LENGTH_INDEFINITE)
                     .setAction("CLOSE", new View.OnClickListener() {

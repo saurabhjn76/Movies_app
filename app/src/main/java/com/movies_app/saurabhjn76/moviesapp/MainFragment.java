@@ -3,6 +3,7 @@ package com.movies_app.saurabhjn76.moviesapp;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -27,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by saurabh on 6/5/16.
@@ -41,9 +43,10 @@ public class MainFragment extends Fragment {
 
     GridView gridview;
     public static MainFragment instance;
+    public  int gridPosition=-2;
     public String sort_order="popular";
-   // public String key = "c8618ff3d5fd73e6601c1d5e1ef3f337"; // invalid key actual key has been removed
-   public String  key ="Insert key here";
+    public String key = "7c8618ff3d5fd73e6601c1d5e1ef3f33"; // invalid key actual key has been removed
+  // public String  key ="Insert key here";
 
     public MainFragment() {
     instance=this;
@@ -51,30 +54,61 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mainFragmentView = inflater.inflate(R.layout.content_main, container, false);
-     //   Toast.makeText(getActivity(),"1234444",Toast.LENGTH_LONG).show();
-        mRequestQ = Volley.newRequestQueue(mainFragmentView.getContext());
+         super.onCreateView(inflater, container, savedInstanceState);
 
-        // setting up adapters
-        imageAdapter = new ImageAdapter(mainFragmentView.getContext());
 
-        gridview = (GridView) mainFragmentView.findViewById(R.id.gridView);
-        update();
-        gridview.setAdapter(imageAdapter);
+        if (savedInstanceState != null)
+        {
+            movies.clear();
+            movies =(ArrayList<Movies>)savedInstanceState.get("Movie_Saved");
+            sort_order=(String) savedInstanceState.get("Sort_Order");
+        }
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                //Toast.makeText(getActivity(), "the......" + position,
-                  //      Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(), DetailActivity.class);
-                Bundle movi=new Bundle();
-                intent.putExtra(Intent.EXTRA_SUBJECT,(Parcelable)movies.get(position));
-                startActivity(intent);
-            }
-        });
+            //   Toast.makeText(getActivity(),"1234444",Toast.LENGTH_LONG).show();
+            mainFragmentView = inflater.inflate(R.layout.content_main, container, false);
+            mRequestQ = Volley.newRequestQueue(mainFragmentView.getContext());
+
+            // setting up adapters
+            imageAdapter = new ImageAdapter(mainFragmentView.getContext());
+
+            gridview = (GridView) mainFragmentView.findViewById(R.id.gridView);
+            update();
+            gridview.setAdapter(imageAdapter);
+
+            gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                    //Toast.makeText(getActivity(), "the......" + position,
+                    //      Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(), DetailActivity.class);
+                    Bundle movi = new Bundle();
+                    intent.putExtra(Intent.EXTRA_SUBJECT, (Parcelable) movies.get(position));
+                    startActivity(intent);
+                }
+            });
+
+
         return mainFragmentView;
     }
-    public void getMovies( String sort_order){
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("Movie_Saved", movies);
+        outState.putString("Sort_Order",sort_order);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null)
+        {
+            movies.clear();
+            movies =(ArrayList<Movies>)savedInstanceState.get("Movie_Saved");
+            sort_order=(String) savedInstanceState.get("Sort_Order");
+        }
+    }
+
+    public void getMovies(String sort_order){
             if(sort_order.equals("favourites"))
             {
                     getFavourites();
@@ -136,6 +170,8 @@ public class MainFragment extends Fragment {
             imageAdapter.addItem(movie.poster_url);
         }
         gridview.setAdapter(imageAdapter);
+        if(gridPosition!=-2)
+        gridview.smoothScrollToPosition(gridview.getLastVisiblePosition());
     }
 
     public void update() {
@@ -143,6 +179,8 @@ public class MainFragment extends Fragment {
         //Toast.makeText(getActivity(),movies.size(),Toast.LENGTH_SHORT).show();
         imageAdapter.clearItems();
         getMovies(sort_order);
+        if(gridPosition!=-2)
+            gridview.setSelection(gridPosition);
 
         //Toast.makeText(getActivity(),"ddfdsfdsfds"+movies.size(),Toast.LENGTH_LONG).show();
     }
