@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class DetailFragment extends Fragment {
     public LinearLayout reviewList;
     public View detailFragmentView;
      Movies movies;
+    ImageView Fav;
 
     public DetailFragment() {
         instance=this;
@@ -95,7 +97,18 @@ public class DetailFragment extends Fragment {
             releasedDate = movies.released_date;
         }
         ((TextView) detailFragmentView.findViewById(R.id.textView_release_date)).setText(releasedDate);
-        headder.setOnClickListener(new View.OnClickListener() {
+            Fav=(ImageView) detailFragmentView.findViewById(R.id.favourite);
+        ContentResolver contentResolver = getActivity().getApplicationContext().getContentResolver();
+        MoviesDB mdb = new MoviesDB();
+        if (mdb.isMovieFavorited(contentResolver, movies.id)){
+            Fav.setImageDrawable(ContextCompat.getDrawable(getActivity(), android.R.drawable.btn_star_big_on));
+        }
+        else
+        {
+            Fav.setImageDrawable(ContextCompat.getDrawable(getActivity(), android.R.drawable.btn_star_big_off));
+        }
+
+                Fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ContentResolver contentResolver = getActivity().getApplicationContext().getContentResolver();
@@ -104,16 +117,17 @@ public class DetailFragment extends Fragment {
                 if (mdb.isMovieFavorited(contentResolver, movies.id)){
                     message = "Removed from Favorites";
                     mdb.removeMovie(contentResolver, movies.id);
-                    Toast.makeText(getActivity().getApplicationContext(),"Removed from favourites",Toast.LENGTH_LONG);
-                    //  fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), android.R.drawable.btn_star_big_off));
+                   // Toast.makeText(getActivity().getApplicationContext(),"Removed from favourites",Toast.LENGTH_LONG);
+                      Fav.setImageDrawable(ContextCompat.getDrawable(getActivity(), android.R.drawable.btn_star_big_off));
                 } else {
                     mdb.addMovie(contentResolver, movies);
                     message = "Added to favorites";
-                    Toast.makeText(getActivity().getApplicationContext(),message,Toast.LENGTH_LONG);
+                   // Toast.makeText(getActivity().getApplicationContext(),message,Toast.LENGTH_LONG);
+                    Fav.setImageDrawable(ContextCompat.getDrawable(getActivity(), android.R.drawable.btn_star_big_on));
 
                 }
                 MainFragment.instance.update();
-                //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
             }
 
         });
