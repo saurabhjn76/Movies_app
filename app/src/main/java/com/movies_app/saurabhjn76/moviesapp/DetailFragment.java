@@ -99,6 +99,8 @@ public class DetailFragment extends Fragment {
         ((TextView) detailFragmentView.findViewById(R.id.textView_release_date)).setText(releasedDate);
             Fav=(ImageView) detailFragmentView.findViewById(R.id.favourite);
         ContentResolver contentResolver = getActivity().getApplicationContext().getContentResolver();
+        if(Fav!=null)
+        {
         MoviesDB mdb = new MoviesDB();
         if (mdb.isMovieFavorited(contentResolver, movies.id)){
             Fav.setImageDrawable(ContextCompat.getDrawable(getActivity(), android.R.drawable.btn_star_big_on));
@@ -130,7 +132,7 @@ public class DetailFragment extends Fragment {
                 Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
             }
 
-        });
+        });}
 
 
     }
