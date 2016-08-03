@@ -42,8 +42,8 @@ public class MainFragment extends Fragment {
     GridView gridview;
     public static MainFragment instance;
     public String sort_order="popular";
-    public String key = "7c8618ff3d5fd73e6601c1d5e1ef3f33"; // invalid key actual key has been removed
-   // public String  key ="onsert key here";
+   // public String key = "c8618ff3d5fd73e6601c1d5e1ef3f337"; // invalid key actual key has been removed
+   public String  key ="Insert key here";
 
     public MainFragment() {
     instance=this;
