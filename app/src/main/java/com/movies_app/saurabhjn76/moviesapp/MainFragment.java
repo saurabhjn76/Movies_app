@@ -76,8 +76,9 @@ public class MainFragment extends Fragment {
             movies =(ArrayList<Movies>)savedInstanceState.get("Movie_Saved");
             sort_order=(String) savedInstanceState.get("Sort_Order");
             int ssize=savedInstanceState.getInt("Size");
+            gridPosition=savedInstanceState.getInt("POSITION");
             Log.e("saed",movies.toString());
-            Log.e("Size",ssize+"");
+            Log.e("Size",gridPosition+"");
         }
             update(sort_order);
             Log.e("sorr ord",sort_order);
@@ -104,6 +105,7 @@ public class MainFragment extends Fragment {
         outState.putParcelableArrayList("Movie_Saved",  movies);
         outState.putString("Sort_Order",sort_order);
         outState.putInt("Size",movies.size());
+        outState.putInt("POSITION", gridview.getFirstVisiblePosition());
         Log.e("Movieatsave",outState.getParcelableArrayList("Movie_Saved").toString());
         super.onSaveInstanceState(outState);
     }
@@ -176,8 +178,9 @@ public class MainFragment extends Fragment {
             imageAdapter.addItem(movie.poster_url);
         }
         gridview.setAdapter(imageAdapter);
-        if(gridPosition!=-2)
-        gridview.smoothScrollToPosition(gridview.getLastVisiblePosition());
+
+        gridview.setSelection(gridPosition);
+        imageAdapter.notifyDataSetChanged();
     }
 
     public void update(String sort_orders) {
@@ -186,8 +189,16 @@ public class MainFragment extends Fragment {
         //Toast.makeText(getActivity(),movies.size(),Toast.LENGTH_SHORT).show();
         imageAdapter.clearItems();
         getMovies(sort_order);
+        gridview.smoothScrollToPosition(gridview.getLastVisiblePosition());
+        imageAdapter.notifyDataSetChanged();
+        Log.e("Grid_POs",gridview.getFirstVisiblePosition()+"");
         if(gridPosition!=-2)
+        {
             gridview.setSelection(gridPosition);
+            Log.e("Actual",gridPosition+"");
+
+
+        }
 
         //Toast.makeText(getActivity(),"ddfdsfdsfds"+movies.size(),Toast.LENGTH_LONG).show();
     }
