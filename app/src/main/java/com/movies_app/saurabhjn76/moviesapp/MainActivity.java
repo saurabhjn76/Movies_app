@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             // (res/layout-sw600dp). If this view is present, then the activity should be
             // in two-pane mode.
             mTwoPane = true;
-            MainFragment.instance.update();
+            MainFragment.instance.update("popular");
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_popularity) {
             fragment.sort_order = "popular";
-            fragment.update();
+            fragment.update(fragment.sort_order);
 
 
 
@@ -195,12 +195,12 @@ public class MainActivity extends AppCompatActivity {
         if(id==R.id.action_rated)
         {
             fragment.sort_order = "top_rated";
-            fragment.update();
+            fragment.update(fragment.sort_order);
         }
         if(id==R.id.action_fav)
         {
             fragment.sort_order="favourites";
-            fragment.update();
+            fragment.update(fragment.sort_order);
         }
 
         return super.onOptionsItemSelected(item);

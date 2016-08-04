@@ -130,7 +130,7 @@ public class DetailFragment extends Fragment {
                     Fav.setImageDrawable(ContextCompat.getDrawable(getActivity(), android.R.drawable.btn_star_big_on));
 
                 }
-                MainFragment.instance.update();
+                MainFragment.instance.update(MainFragment.instance.sort_order);
                 Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
             }
 

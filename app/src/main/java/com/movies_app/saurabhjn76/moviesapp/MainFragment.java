@@ -44,7 +44,7 @@ public class MainFragment extends Fragment {
     GridView gridview;
     public static MainFragment instance;
     public  int gridPosition=-2;
-    public String sort_order="popular";
+    public static String sort_order="popular";
     public String key = "7c8618ff3d5fd73e6601c1d5e1ef3f33"; // invalid key actual key has been removed
   // public String  key ="Insert key here";
 
@@ -55,14 +55,10 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
          super.onCreateView(inflater, container, savedInstanceState);
+        Log.e("Onview",sort_order);
 
 
-        if (savedInstanceState != null)
-        {
-            movies.clear();
-            movies =(ArrayList<Movies>)savedInstanceState.get("Movie_Saved");
-            sort_order=(String) savedInstanceState.get("Sort_Order");
-        }
+
 
             //   Toast.makeText(getActivity(),"1234444",Toast.LENGTH_LONG).show();
             mainFragmentView = inflater.inflate(R.layout.content_main, container, false);
@@ -72,7 +68,19 @@ public class MainFragment extends Fragment {
             imageAdapter = new ImageAdapter(mainFragmentView.getContext());
 
             gridview = (GridView) mainFragmentView.findViewById(R.id.gridView);
-            update();
+
+        if (savedInstanceState != null)
+        {
+            movies.clear();
+
+            movies =(ArrayList<Movies>)savedInstanceState.get("Movie_Saved");
+            sort_order=(String) savedInstanceState.get("Sort_Order");
+            int ssize=savedInstanceState.getInt("Size");
+            Log.e("saed",movies.toString());
+            Log.e("Size",ssize+"");
+        }
+            update(sort_order);
+            Log.e("sorr ord",sort_order);
             gridview.setAdapter(imageAdapter);
 
             gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,20 +100,18 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("Movie_Saved", movies);
+
+        outState.putParcelableArrayList("Movie_Saved",  movies);
         outState.putString("Sort_Order",sort_order);
+        outState.putInt("Size",movies.size());
+        Log.e("Movieatsave",outState.getParcelableArrayList("Movie_Saved").toString());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null)
-        {
-            movies.clear();
-            movies =(ArrayList<Movies>)savedInstanceState.get("Movie_Saved");
-            sort_order=(String) savedInstanceState.get("Sort_Order");
-        }
+        Log.e("create",sort_order);
     }
 
     public void getMovies(String sort_order){
@@ -174,7 +180,8 @@ public class MainFragment extends Fragment {
         gridview.smoothScrollToPosition(gridview.getLastVisiblePosition());
     }
 
-    public void update() {
+    public void update(String sort_orders) {
+        sort_order=sort_orders;
         movies.clear();
         //Toast.makeText(getActivity(),movies.size(),Toast.LENGTH_SHORT).show();
         imageAdapter.clearItems();
